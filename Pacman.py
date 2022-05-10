@@ -2,7 +2,7 @@
 Juego: Pacman
 
 Programador 1: Iván Santiago Hernández Mendoza - A01662556
-Programador 2: Diego Jacobo - 
+Programador 2: Diego Jacobo Martínez - A01656583 
 
 Fecha: 09 / 05 / 2022
 
@@ -19,10 +19,10 @@ writer = Turtle(visible=False)
 aim = vector(5, 0)
 pacman = vector(-40, -80)
 ghosts = [
-    [vector(-180, 160), vector(5, 0)],
-    [vector(-180, -160), vector(0, 5)],
-    [vector(100, 160), vector(0, -5)],
-    [vector(100, -160), vector(-5, 0)],
+    [vector(-180, 160), vector(7, 0)], # Se aumenta el valor del segundo vector para aumentar la velocidad
+    [vector(-180, -160), vector(0, 7)],# inicial de los fantasmas
+    [vector(100, 160), vector(0, -7)],
+    [vector(100, -160), vector(-7, 0)],
 ]
 # fmt: off
 tiles = [
@@ -134,10 +134,10 @@ def move():
             point.move(course)
         else:
             options = [
-                vector(5, 0),
-                vector(-5, 0),
-                vector(0, 5),
-                vector(0, -5),
+                vector(7, 0),   # Se añade velocidad al momento de actualizar el vector de los fantasmas, así
+                vector(-7, 0),  # asi cuando estos cambien de direccion mantendran su velocidad aumentada
+                vector(0, 7),
+                vector(0, -7),
             ]
             plan = choice(options)
             course.x = plan.x
