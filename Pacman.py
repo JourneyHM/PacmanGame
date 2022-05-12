@@ -17,10 +17,10 @@ state = {'score': 0}
 path = Turtle(visible=False)
 writer = Turtle(visible=False)
 aim = vector(5, 0)
-pacman = vector(0, 0)   # Se modifico la coordenada de inicio de PACMAN
+pacman = vector(0, 0)         # Se modifico la coordenada de inicio de PACMAN
 ghosts = [
-    [vector(-180, 160), vector(7, 0)], # Se aumenta el valor del segundo vector para aumentar la velocidad
-    [vector(-180, -160), vector(0, 7)],# inicial de los fantasmas
+    [vector(-180, 160), vector(7, 0)],      # Se aumenta el valor del segundo vector para aumentar la velocidad
+    [vector(-180, -160), vector(0, 7)],     # inicial de los fantasmas
     [vector(100, 160), vector(0, -7)],
     [vector(100, -160), vector(-7, 0)],
 ]
@@ -134,8 +134,8 @@ def move():
             point.move(course)
         else:
             options = [
-                vector(7, 0),   # Se añade velocidad al momento de actualizar el vector de los fantasmas, así
-                vector(-7, 0),  # asi cuando estos cambien de direccion mantendran su velocidad aumentada
+                vector(7, 0),   # Se añade velocidad al momento de actualizar el vector de los fantasmas
+                vector(-7, 0),  # Así cuando estos cambien de direccion mantendran su velocidad aumentada
                 vector(0, 7),
                 vector(0, -7),
             ]
@@ -152,7 +152,24 @@ def move():
     for point, course in ghosts:
         if abs(pacman - point) < 20:
             return
+        
+        if pacman.x == point.x:           # Si la posicion del fantasma coincide con la de PACMAN en el eje x...
+            options = [
+                vector(0, 7),
+                vector(0, -7),
+            ]
+            plan = choice(options)        # Elige entre una de las opciones el curso que llevará el fantasma 
+            course.y = plan.y             # (Arriba o Abajo)
+        
+        if pacman.y == point.y:           # Si la posición del fantasma coincide con la de PACMAN en el eje y...
+            options = [
+                vector(7, 0),
+                vector(-7, 0),
+            ]
+            plan = choice(options)        # Elige entre una de las opciones el curso que llevará el fantasma
+            course.x = plan.x             # (Izquierda o Derecha)
 
+        
     ontimer(move, 100)
 
 
