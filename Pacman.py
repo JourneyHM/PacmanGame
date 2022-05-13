@@ -16,13 +16,13 @@ from freegames import floor, vector
 state = {'score': 0}
 path = Turtle(visible=False)
 writer = Turtle(visible=False)
-aim = vector(5, 0)
+aim = vector(8, 0)
 pacman = vector(0, 0)         # Se modifico la coordenada de inicio de PACMAN
 ghosts = [
-    [vector(-180, 160), vector(7, 0)],      # Se aumenta el valor del segundo vector para aumentar la velocidad
-    [vector(-180, -160), vector(0, 7)],     # inicial de los fantasmas
-    [vector(100, 160), vector(0, -7)],
-    [vector(100, -160), vector(-7, 0)],
+    [vector(-180, 160), vector(10, 0)],      # Se aumenta el valor del segundo vector para aumentar la velocidad
+    [vector(-180, -160), vector(0, 10)],     # inicial de los fantasmas
+    [vector(100, 160), vector(0, -10)],
+    [vector(100, -160), vector(-10, 0)],
 ]
 # fmt: off
 tiles = [   # Se modifico el tablero
@@ -133,7 +133,22 @@ def move():
         if valid(point + course):
             point.move(course)
         else:
-            options = [
+            if pacman.x == point.x:          # Si la posición del fantasma coincide con la de PACMAN en el eje x---
+                options = [                  # Muevete hacia arriba o hacia abajo
+                vector(0, 10),
+                vector(0, -10),
+                ]
+               
+            
+            if pacman.y == point.y:           # Si la posición del fantasma coincide con la de PACMAN en el eje y...
+                options = [
+                vector(10, 0),                # (Izquierda o Derecha)
+                vector(-10, 0),
+                ] 
+                          
+            
+            else:
+                options = [
                 vector(7, 0),   # Se añade velocidad al momento de actualizar el vector de los fantasmas
                 vector(-7, 0),  # Así cuando estos cambien de direccion mantendran su velocidad aumentada
                 vector(0, 7),
@@ -142,6 +157,10 @@ def move():
             plan = choice(options)
             course.x = plan.x
             course.y = plan.y
+
+
+
+
 
         up()
         goto(point.x + 10, point.y + 10)
@@ -153,22 +172,9 @@ def move():
         if abs(pacman - point) < 20:
             return
         
-        if pacman.x == point.x:           # Si la posicion del fantasma coincide con la de PACMAN en el eje x...
-            options = [
-                vector(0, 7),
-                vector(0, -7),
-            ]
-            plan = choice(options)        # Elige entre una de las opciones el curso que llevará el fantasma 
-            course.y = plan.y             # (Arriba o Abajo)
         
-        if pacman.y == point.y:           # Si la posición del fantasma coincide con la de PACMAN en el eje y...
-            options = [
-                vector(7, 0),
-                vector(-7, 0),
-            ]
-            plan = choice(options)        # Elige entre una de las opciones el curso que llevará el fantasma
-            course.x = plan.x             # (Izquierda o Derecha)
-
+        
+        
         
     ontimer(move, 100)
 
